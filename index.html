@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Fresh Vegetables</title>
+    <!-- Link External CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h2><img src="https://cdn-icons-png.flaticon.com/512/2224/2224115.png" alt="icon"
+                style="width: 50px; vertical-align: middle; margin-right: 12px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); animation: float 3s ease-in-out infinite;">
+            Daily Fresh Vegetables</h2>
+        <p
+            style="letter-spacing: 2px; text-transform: uppercase; font-size: 11px; margin-top: 8px; opacity: 0.8; font-weight: 500;">
+            Premium Fresh & Organic Vegetables</p>
+
+        <div class="contact-box"
+            style="margin-top: 20px; max-width: 400px; margin-left: auto; margin-right: auto; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 20px;">
+            <div
+                style="display: flex; flex-direction: column; gap: 12px; justify-content: center; align-items: center; font-size: 14px; opacity: 1; font-weight: 600; color: var(--primary-dark);">
+                <span
+                    style="display: flex; align-items: center; gap: 6px; background: white; padding: 8px 16px; border-radius: 30px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    📞 +91 70209 75382
+                </span>
+                <span
+                    style="display: flex; align-items: center; gap: 6px; background: white; padding: 8px 16px; border-radius: 30px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    ✉️ support@dailyfresh.com
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="section-title">
+            <span></span> Select Farm Fresh Vegetables
+        </div>
+
+        <div class="grid-products" id="productGrid">
+            <!-- Products will be loaded here dynamically from js/main.js -->
+            <div style="grid-column: 1/-1; text-align:center; padding: 40px;">
+                <p>Loading fresh vegetables...</p>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <span>👤</span> Customer Details
+        </div>
+
+        <div class="grid-customer">
+            <div class="input-group">
+                <label>Full Name</label>
+                <input id="name" placeholder="John Doe" />
+            </div>
+            <div class="input-group">
+                <label>Phone Number</label>
+                <input id="phone" type="tel" placeholder="+91 98765 43210" />
+            </div>
+            <div class="input-group full-width">
+                <label>Email Address</label>
+                <input id="email" type="email" placeholder="john@example.com" />
+            </div>
+            <div class="input-group full-width">
+                <label>Delivery Address</label>
+                <textarea id="address" rows="3" placeholder="Flat No, Street, Landmark, City, Pincode"></textarea>
+            </div>
+        </div>
+
+        <div class="card summary-card">
+            <div class="total-row">
+                <span class="total-label">Total Amount</span>
+                <span class="total-amount">₹<span id="total">0</span></span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <button onclick="showPreview()"
+                    style="background: white; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; padding: 14px;">
+                    👁️ Preview Order Details
+                </button>
+                <button id="submitBtn" onclick="submitOrder()">
+                    ✅ Place Order
+                </button>
+            </div>
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <h3>🛒 Order Summary</h3>
+            <div id="previewList"
+                style="text-align: left; max-height: 300px; overflow-y: auto; margin: 15px 0; background: #f8fafc; padding: 15px; border-radius: 12px; font-size: 14px; border: 1px solid #edf2f7;">
+                <!-- List items -->
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 20px; font-size: 18px; color: var(--primary-dark); padding: 0 10px;">
+                <span>Total:</span>
+                <span>₹<span id="previewTotal">0</span></span>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <button onclick="generatePreviewInvoice()"
+                    style="background: white; border: 1px solid #e2e8f0; color: #4a5568; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                    📄 Preview Bill
+                </button>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closePreviewModal()" class="btn-edit">Edit</button>
+                <button onclick="confirmOrderFromPreview()">Confirm & Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="successOverlay" class="success-overlay">
+        <div class="success-card">
+            <div class="checkmark-circle">
+                <div class="checkmark"></div>
+            </div>
+            <h2>Order Placed!</h2>
+            <p>Thank you, <span id="successName"></span>!<br>We have received your order and will deliver it fresh to
+                your doorstep.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                <button onclick="closeSuccessOverlay()"
+                    style="background: var(--primary); color: white; border: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px rgba(46, 125, 50, 0.3);">
+                    Continue Shopping
+                </button>
+                <button onclick="generateInvoice()"
+                    style="background: white; color: var(--text-dark); border: 1px solid #e2e8f0; padding: 14px 32px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    📄 Preview Bill
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
